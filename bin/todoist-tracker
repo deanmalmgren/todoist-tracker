@@ -17,23 +17,19 @@ import json
 import argparse
 import datetime
 
-from todoist_tracker.cli import get_command_line_parser, run_subcommand
+from todoist_tracker.cli import get_cli_parser, run_subcommand
 
 from todoist import TodoistAPI
 
 
-parser = get_command_line_parser()
+parser = get_cli_parser()
 args = parser.parse_args()
 run_subcommand(args)
 
-import ipdb; ipdb.set_trace()
 
-print 'wtf'
-
-
-# create an authenticated instance of the TodoistAPI
-credentials = json.load(args.todoist)
-todoist_api = TodoistAPI(**credentials)
+# # create an authenticated instance of the TodoistAPI
+# credentials = json.load(args.todoist)
+# todoist_api = TodoistAPI(**credentials)
 
 # # get the project id
 # todoist_api.projects.sync()
