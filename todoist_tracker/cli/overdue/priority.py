@@ -24,6 +24,6 @@ class Command(BaseCommand):
             for priority, count in sorted(counter.iteritems()):
                 print '%4d overdue %s priority items' % (count, priority)
             print '-' * 30
-            print '%4d overdue items TOTAL' % sum(counter.itervalues())
+            print '%4d overdue items TOTAL' % len(overdue_items)
         else:
             raise NotImplementedError
