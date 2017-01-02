@@ -17,12 +17,12 @@ import json
 import argparse
 import datetime
 
-from todoist_tracker.cli import TodoistTrackerParser, run_subcommand
+from todoist_tracker.cli import get_command_line_parser, run_subcommand
 
 from todoist import TodoistAPI
 
 
-parser = TodoistTrackerParser()
+parser = get_command_line_parser()
 args = parser.parse_args()
 run_subcommand(args)
 
