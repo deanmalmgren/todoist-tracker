@@ -25,6 +25,8 @@ from todoist import TodoistAPI
 parser = TodoistTrackerParser()
 args = parser.parse_args()
 
+import ipdb; ipdb.set_trace()
+
 print 'wtf'
 
 

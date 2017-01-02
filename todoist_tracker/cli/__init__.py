@@ -30,3 +30,22 @@ class TodoistTrackerParser(argparse.ArgumentParser):
             action='store_true',
             help='log output on command line, NOT google spreadsheet'
         )
+
+        self.subparsers = self.add_subparsers(
+            parser_class=argparse.ArgumentParser,
+        )
+        self.add_overdue_parser()
+
+    def add_overdue_parser(self):
+        # TODO: clean this up in subclasses instead of this grossness
+        self.overdue_parser = self.subparsers.add_parser('overdue')
+        overdue_subparsers = self.overdue_parser.add_subparsers()
+        self.overdue_n_parser = overdue_subparsers.add_parser(
+            'n',
+        )
+        self.overdue_time_parser = overdue_subparsers.add_parser(
+            'time',
+        )
+        self.overdue_priority_parser = overdue_subparsers.add_parser(
+            'priority',
+        )
