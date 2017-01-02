@@ -2,7 +2,6 @@ from ..base import BaseCommand
 from ...overdue import get_overdue_items
 
 
-
 class Command(BaseCommand):
     help_text = (
         "Count the number of overdue tasks"
