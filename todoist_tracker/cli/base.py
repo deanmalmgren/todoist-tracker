@@ -1,4 +1,7 @@
 import argparse
+import json
+
+from todoist import TodoistAPI
 
 
 class BaseCommand(object):
@@ -47,7 +50,9 @@ class BaseCommand(object):
     def execute(self, todoist=None, google=None, debug=None, **kwargs):
         """Common execution workflows are handled here"""
 
-        # authenticate to todoist
+        # create an authenticated instance of the TodoistAPI
+        credentials = json.load(todoist)
+        self.todoist_api = TodoistAPI(**credentials)
 
         # authenticate to google
         pass

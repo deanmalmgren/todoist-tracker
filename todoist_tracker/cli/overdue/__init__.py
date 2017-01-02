@@ -24,4 +24,4 @@ class Command(BaseCommand):
         )
 
     def execute(self, **kwargs):
-        super(Command, self).execute(**kwargs)
+        raise NotImplementedError("this should never happen")
