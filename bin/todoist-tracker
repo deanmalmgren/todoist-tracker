@@ -1,0 +1,72 @@
+#!/usr/bin/env python
+# -*- mode: python -*-
+
+"""
+This script uses the Todoist configuration in todoist.json to track various
+things in todoist and store them in a google spreadsheet. This includes things
+like:
+
+* how many tasks are currently OVERDUE (including today)
+* how much time is allocated to currently OVERDUE (including today) tasks
+* the priority level of currently OVERDUE (including today) tasks
+
+"""
+
+import os
+import json
+import argparse
+import datetime
+
+from todoist_tracker.cli import TodoistTrackerParser
+
+from todoist import TodoistAPI
+
+
+parser = TodoistTrackerParser()
+args = parser.parse_args()
+
+print 'wtf'
+
+
+# create an authenticated instance of the TodoistAPI
+credentials = json.load(args.todoist)
+todoist_api = TodoistAPI(**credentials)
+
+# # get the project id
+# todoist_api.projects.sync()
+# project_id = None
+# for project in todoist_api.projects.all():
+#     if project['name'] == args.todoist_project_name:
+#         project_id = project['id']
+# if project_id is None:
+#     raise ValueError((
+#         'did not find todoists project "%(todoist_project_name)s"'
+#     ) % vars(args))
+#
+# # get the label ids as necessary
+# label_id_ref = {}
+# label_ids = []
+# todoist_labels = args.todoist_labels or []
+# for todoist_label in todoist_api.labels.all():
+#     name = todoist_label['name']
+#     label_id_ref[name] = todoist_label['id']
+#     label_id_ref['@' + name] = todoist_label['id']
+# for label in todoist_labels:
+#     label_ids.append(label_id_ref[label])
+#
+# # add due cards as todoist tasks
+# for card in cards_due_today:
+#     text = '[%(name)s](%(url)s)' % vars(card)
+#     if args.debug:
+#         print 'Adding task', text
+#         print '    to project', project_id
+#         print '    with priority', args.todoist_priority
+#         print '    and labels', label_ids
+#     else:
+#         todoist_api.add_item(
+#             text,
+#             project_id=project_id,
+#             labels=str(label_ids).replace(' ',''),
+#             priority=args.todoist_priority,
+#             date_string='today',
+#         )

@@ -38,6 +38,7 @@ setup(
     license='MIT',
     packages=[
         'todoist_tracker',
+        'todoist_tracker.cli',
     ],
     scripts=scripts,
     install_requires=dependencies,

@@ -64,4 +64,17 @@ being sent warnings every time the script is run.
     pip install -r requirements/python-dev
     ```
 
+1. add the `bin/` directory to your virtualenv `PATH` and the
+  project root to your `PYTHONPATH` with
+  ```sh
+  # setup paths on virtualenv activation
+  echo 'export __PATH_TODOIST_TRACKER=$PATH' > ~/.virtualenvs/todoist-tracker/bin/postactivate
+  echo 'export PATH=$PATH:'`pwd`'/bin' >> ~/.virtualenvs/todoist-tracker/bin/postactivate
+  echo 'export PYTHONPATH=$PYTHONPATH:'`pwd` >> ~/.virtualenvs/todoist-tracker/bin/postactivate
+
+  # setup paths on virtualenv deactivation
+  echo 'unset PYTHONPATH' > ~/.virtualenvs/todoist-tracker/bin/predeactivate
+  echo 'export PATH=$__PATH_TODOIST_TRACKER' > ~/.virtualenvs/todoist-tracker/bin/predeactivate
+  ```
+
 1. follow the quick start instructions above to get your todoist credentials.
