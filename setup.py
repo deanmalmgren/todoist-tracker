@@ -38,6 +38,7 @@ setup(
     packages=[
         'todoist_tracker',
         'todoist_tracker.cli',
+        'todoist_tracker.overdue',
     ],
     scripts=scripts,
     install_requires=dependencies,
