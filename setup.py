@@ -3,8 +3,7 @@ import os
 from setuptools import setup
 
 # get all of the scripts
-this_dir = os.path.dirname(os.path.abspath(__file__))
-scripts = glob.glob(os.path.join(this_dir, "bin", "*"))
+scripts = glob.glob(os.path.join("bin", "*"))
 
 # read in the description from README
 with open("README.md") as stream:
@@ -14,7 +13,7 @@ github_url='https://github.com/deanmalmgren/todoist-tracker'
 
 # read in the dependencies from the virtualenv requirements file
 dependencies, dependency_links = [], []
-filename = os.path.join(this_dir, "requirements", "python")
+filename = os.path.join("requirements", "python")
 with open(filename, 'r') as stream:
     for line in stream:
         line = line.strip()
@@ -28,7 +27,7 @@ with open(filename, 'r') as stream:
 # create the package
 setup(
     name='todoist-tracker',
-    version='0.1.0',
+    version='0.1.1',
     description="track various metrics for todoist",
     long_description=long_description,
     url=github_url,
