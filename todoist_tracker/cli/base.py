@@ -3,6 +3,7 @@ import json
 
 from todoist import TodoistAPI
 import gspread
+from gspread.exceptions import WorksheetNotFound
 from oauth2client.service_account import ServiceAccountCredentials
 
 
@@ -64,3 +65,11 @@ class BaseCommand(object):
         )
         gdrive = gspread.authorize(credentials)
         self.gdrive_workbook = gdrive.open_by_url(google_keys['workbook_url'])
+
+    def get_or_create_worksheet(self, title, header):
+        try:
+            worksheet = self.gdrive_workbook.worksheet(title)
+        except WorksheetNotFound:
+            worksheet = self.gdrive_workbook.add_worksheet(title, 1, 26)
+            worksheet.insert_row(header)
+        return worksheet

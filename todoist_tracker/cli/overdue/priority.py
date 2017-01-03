@@ -1,3 +1,5 @@
+import datetime
+
 from ..base import BaseCommand
 from ...overdue import get_overdue_items
 
@@ -26,4 +28,15 @@ class Command(BaseCommand):
             print '-' * 30
             print '%4d overdue items TOTAL' % len(overdue_items)
         else:
-            raise NotImplementedError
+            worksheet = self.get_or_create_worksheet(
+                'overdue priority',
+                ['date', 'n', 'p1', 'p2', 'p3', 'p4'],
+            )
+            worksheet.insert_row([
+                datetime.datetime.now().date(),
+                len(overdue_items),
+                counter['p1'],
+                counter['p2'],
+                counter['p3'],
+                counter['p4'],
+            ], 2)

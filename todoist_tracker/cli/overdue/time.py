@@ -1,3 +1,5 @@
+import datetime
+
 from pytimeparse.timeparse import timeparse
 
 from ..base import BaseCommand
@@ -31,7 +33,15 @@ class Command(BaseCommand):
                 total_time
             )
         else:
-            raise NotImplementedError
+            worksheet = self.get_or_create_worksheet(
+                'overdue time',
+                ['date', 'n', 'time (hours)'],
+            )
+            worksheet.insert_row([
+                datetime.datetime.now().date(),
+                len(overdue_items),
+                total_time,
+            ], 2)
 
     def get_todoist_labels(self):
         if self._todoist_labels:
