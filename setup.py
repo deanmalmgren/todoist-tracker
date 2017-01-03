@@ -27,7 +27,7 @@ with open(filename, 'r') as stream:
 # create the package
 setup(
     name='todoist-tracker',
-    version='0.1.1',
+    version='0.1.2',
     description="track various metrics for todoist",
     long_description=long_description,
     url=github_url,
