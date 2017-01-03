@@ -26,9 +26,9 @@ being sent warnings every time the script is run.
 ## quick start
 
 1. install `todoist-tracker` from pypi:
-    ```sh
-    pip install todoist-tracker
-    ```
+   ```sh
+   pip install todoist-tracker
+   ```
 
 1. get your todoist api token from the todoist `Settings` > `Account` > `API
    token`.
@@ -41,40 +41,42 @@ being sent warnings every time the script is run.
    }
    ```
 
-1. get your google spreadsheet credentials from TKTK
+1. get your google spreadsheet credentials by following [the gspread
+   instructions](http://gspread.readthedocs.io/en/latest/oauth2.html).
 
 1. place your google spreadsheet credentials in a `google.json` file in the
-   repository root that looks like this:
+   repository root and add your `workbook_url` to the JSON:
    ```json
    {
-       "TKTK": "TKTK"
+     ...
+     "workbook_url": "https://docs.google.com/spreadsheets/d/SPREADSHEET_ID/edit#gid=0"
    }
    ```
 
 1. :boom: For usage instructions, see
-  ```sh
-  todoist-tracker -h
-  ```
+   ```sh
+   todoist-tracker -h
+   ```
 
 ## development
 
 1. instantiate virtual environment
-    ```sh
-    mkvirtualenv todoist-tracker
-    pip install -r requirements/python-dev
-    ```
+   ```sh
+   mkvirtualenv todoist-tracker
+   pip install -r requirements/python-dev
+   ```
 
 1. add the `bin/` directory to your virtualenv `PATH` and the
-  project root to your `PYTHONPATH` with
-  ```sh
-  # setup paths on virtualenv activation
-  echo 'export __PATH_TODOIST_TRACKER=$PATH' > ~/.virtualenvs/todoist-tracker/bin/postactivate
-  echo 'export PATH=$PATH:'`pwd`'/bin' >> ~/.virtualenvs/todoist-tracker/bin/postactivate
-  echo 'export PYTHONPATH=$PYTHONPATH:'`pwd` >> ~/.virtualenvs/todoist-tracker/bin/postactivate
+   project root to your `PYTHONPATH` with
+   ```sh
+   # setup paths on virtualenv activation
+   echo 'export __PATH_TODOIST_TRACKER=$PATH' > ~/.virtualenvs/todoist-tracker/bin/postactivate
+   echo 'export PATH=$PATH:'`pwd`'/bin' >> ~/.virtualenvs/todoist-tracker/bin/postactivate
+   echo 'export PYTHONPATH=$PYTHONPATH:'`pwd` >> ~/.virtualenvs/todoist-tracker/bin/postactivate
 
-  # setup paths on virtualenv deactivation
-  echo 'unset PYTHONPATH' > ~/.virtualenvs/todoist-tracker/bin/predeactivate
-  echo 'export PATH=$__PATH_TODOIST_TRACKER' > ~/.virtualenvs/todoist-tracker/bin/predeactivate
-  ```
+   # setup paths on virtualenv deactivation
+   echo 'unset PYTHONPATH' > ~/.virtualenvs/todoist-tracker/bin/predeactivate
+   echo 'export PATH=$__PATH_TODOIST_TRACKER' > ~/.virtualenvs/todoist-tracker/bin/predeactivate
+   ```
 
 1. follow the quick start instructions above to get your todoist credentials.

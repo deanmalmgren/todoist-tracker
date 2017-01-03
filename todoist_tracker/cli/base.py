@@ -2,6 +2,8 @@ import argparse
 import json
 
 from todoist import TodoistAPI
+import gspread
+from oauth2client.service_account import ServiceAccountCredentials
 
 
 class BaseCommand(object):
@@ -55,4 +57,10 @@ class BaseCommand(object):
         self.todoist_api = TodoistAPI(**credentials)
 
         # authenticate to google
-        pass
+        google_keys = json.load(google)
+        credentials = ServiceAccountCredentials.from_json_keyfile_name(
+            google.name,
+            ['https://spreadsheets.google.com/feeds'],
+        )
+        gdrive = gspread.authorize(credentials)
+        self.gdrive_workbook = gdrive.open_by_url(google_keys['workbook_url'])
