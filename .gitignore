@@ -91,3 +91,4 @@ ENV/
 # config files
 todoist.json
 google.json
+.todoist-tracker-sync/

@@ -1,5 +1,7 @@
 import argparse
 import json
+import os
+import shutil
 
 from todoist import TodoistAPI
 import gspread
@@ -53,8 +55,15 @@ class BaseCommand(object):
     def execute(self, todoist=None, google=None, debug=None, **kwargs):
         """Common execution workflows are handled here"""
 
-        # create an authenticated instance of the TodoistAPI
+        # create an authenticated instance of the TodoistAPI. be sure to store
+        # the cached data locally and to nuke the existing sync prior to
+        # running. otherwise the number of outdated tasks grows
         credentials = json.load(todoist)
+        credentials['cache'] = os.path.join(
+            os.getcwd(), '.todoist-tracker-sync/'
+        )
+        if os.path.exists(credentials['cache']):
+            shutil.rmtree(credentials['cache'])
         self.todoist_api = TodoistAPI(**credentials)
 
         # authenticate to google
