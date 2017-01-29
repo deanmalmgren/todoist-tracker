@@ -1,9 +1,10 @@
 import argparse
 
+from . import availability
 from . import overdue
 from .utils import get_command_line_parser
 
-COMMAND_MODULES = (overdue, )
+COMMAND_MODULES = (availability, overdue, )
 
 
 def get_cli_parser():
