@@ -53,6 +53,14 @@ being sent warnings every time the script is run.
    }
    ```
 
+1. [enable the google calendar api
+   access](https://console.developers.google.com/flows/enableapi?apiid=calendar)
+   by adding it to the same Google API project as the google spreadsheet
+   access. [follow the
+   instructions](https://developers.google.com/google-apps/calendar/quickstart/python)
+   for scripting access to the google API from python and have those
+   credentials saved in `~/.credentials/todoist-tracker.json`.
+
 1. :boom: For usage instructions, see
    ```sh
    todoist-tracker -h
