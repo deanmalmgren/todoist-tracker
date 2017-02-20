@@ -7,7 +7,7 @@ import arrow
 from oauth2client.file import Storage
 from apiclient import discovery
 
-from ..base import BaseCommand
+from ..base import TimeBaseCommand
 from ... import tasks
 
 SCOPES = 'https://www.googleapis.com/auth/calendar.readonly'
@@ -15,10 +15,18 @@ CLIENT_SECRET_FILE = 'client_secret.json'
 APPLICATION_NAME = 'todoist-tracker'
 
 
-class Command(BaseCommand):
+def iterdates(start_date, n_days):
+    for n in range(0, n_days+1):
+        yield start_date + datetime.timedelta(days=n)
+
+
+class Command(TimeBaseCommand):
     help_text = (
         "Check availability over the coming days"
     )
+
+    def __init__(self, *args, **kwargs):
+        super(Command, self).__init__(*args, **kwargs)
 
     def add_command_line_options(self):
         super(Command, self).add_command_line_options()
@@ -58,15 +66,31 @@ class Command(BaseCommand):
         # count the amount of meeting time per day
         #
         # NOTE: this does not work very well with double booked meetings
-        hours_per_day = collections.Counter()
+        daily_events = collections.Counter()
         for event in events:
             # import ipdb; ipdb.set_trace()
             start = arrow.get(event['start'].get('dateTime'))
             end = arrow.get(event['end'].get('dateTime'))
             duration = end - start
-            hours_per_day[start.date()] += duration.seconds / 3600.0
+            daily_events[start.date()] += duration.seconds / 3600.0
 
-        tasks.get_future(self.todoist_api, n_days)
+        # count the number of tasks that are due on each day
+        daily_tasks = collections.Counter()
+        future_tasks = tasks.get_future(self.todoist_api, n_days)
+        for task in future_tasks:
+            duedate = tasks.get_duedate(task)
+            daily_tasks[duedate] += self.get_hours_estimate(task)
 
-        for day, hours in sorted(hours_per_day.iteritems()):
-            print day, hours
+        print "{:12s} {:>8s} {:>8s} {:>8s}".format(
+            "DATE",
+            "EVENTS",
+            "TASKS",
+            "TOTAL",
+        )
+        for date in iterdates(datetime.date.today(), n_days):
+            print "{:12s} {:8.2f} {:8.2f} {:8.2f}".format(
+                str(date),
+                daily_events[date],
+                daily_tasks[date],
+                daily_events[date] + daily_tasks[date],
+            )

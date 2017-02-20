@@ -6,6 +6,7 @@ from todoist import TodoistAPI
 import gspread
 from gspread.exceptions import WorksheetNotFound
 from oauth2client.service_account import ServiceAccountCredentials
+from pytimeparse.timeparse import timeparse
 
 
 class BaseCommand(object):
@@ -79,3 +80,30 @@ class BaseCommand(object):
             worksheet = self.gdrive_workbook.add_worksheet(title, 1, 26)
             worksheet.insert_row(header)
         return worksheet
+
+
+class TimeBaseCommand(BaseCommand):
+    """easily calculate the time required for various tasks"""
+
+    def __init__(self, *args, **kwargs):
+        super(TimeBaseCommand, self).__init__(*args, **kwargs)
+        self._todoist_labels = None
+
+    def get_todoist_labels(self):
+        if self._todoist_labels:
+            return self._todoist_labels
+        labels = self.todoist_api.labels.all()
+        self._todoist_labels = {}
+        for label in labels:
+            self._todoist_labels[label['id']] = label['name']
+        return self._todoist_labels
+
+    def get_hours_estimate(self, item):
+        labels = self.get_todoist_labels()
+        hours = 0.0
+        for label_id in item['labels']:
+            label = labels[label_id]
+            seconds_estimate = timeparse(label)
+            if seconds_estimate is not None:
+                hours += seconds_estimate / 60.0 / 60.0
+        return hours

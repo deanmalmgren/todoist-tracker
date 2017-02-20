@@ -24,10 +24,13 @@ def iter_task_duedates(todoist_api):
     sync(todoist_api)
     for item in todoist_api.items.all():
         if item['due_date_utc']:
-            due_datetime = arrow.get(item['due_date_utc'], [TODOIST_FORMAT])
-            local_due_datetime = due_datetime.to('local')
-            local_due_date = local_due_datetime.date()
-            yield item, local_due_date
+            yield item, get_duedate(item)
+
+
+def get_duedate(task):
+    due_datetime = arrow.get(task['due_date_utc'], [TODOIST_FORMAT])
+    local_due_datetime = due_datetime.to('local')
+    return local_due_datetime.date()
 
 
 def get_overdue(todoist_api):
