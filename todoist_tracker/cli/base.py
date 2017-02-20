@@ -1,7 +1,6 @@
 import argparse
 import json
 import os
-import shutil
 
 from todoist import TodoistAPI
 import gspread
@@ -62,8 +61,6 @@ class BaseCommand(object):
         credentials['cache'] = os.path.join(
             os.getcwd(), '.todoist-tracker-sync/'
         )
-        if os.path.exists(credentials['cache']):
-            shutil.rmtree(credentials['cache'])
         self.todoist_api = TodoistAPI(**credentials)
 
         # authenticate to google

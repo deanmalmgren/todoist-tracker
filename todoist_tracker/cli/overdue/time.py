@@ -3,7 +3,7 @@ import datetime
 from pytimeparse.timeparse import timeparse
 
 from ..base import BaseCommand
-from ...overdue import get_overdue_items
+from ... import tasks
 
 
 class Command(BaseCommand):
@@ -21,7 +21,7 @@ class Command(BaseCommand):
     def execute(self, **kwargs):
         super(Command, self).execute(**kwargs)
 
-        overdue_items = get_overdue_items(self.todoist_api)
+        overdue_items = tasks.get_overdue(self.todoist_api)
 
         total_time = 0.0
         for item in overdue_items:

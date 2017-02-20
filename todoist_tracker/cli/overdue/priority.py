@@ -1,7 +1,7 @@
 import datetime
 
 from ..base import BaseCommand
-from ...overdue import get_overdue_items
+from ... import tasks
 
 
 class Command(BaseCommand):
@@ -15,7 +15,7 @@ class Command(BaseCommand):
     def execute(self, **kwargs):
         super(Command, self).execute(**kwargs)
 
-        overdue_items = get_overdue_items(self.todoist_api)
+        overdue_items = tasks.get_overdue(self.todoist_api)
 
         counter = {'p1': 0, 'p2': 0, 'p3': 0, 'p4': 0}
         for item in overdue_items:
