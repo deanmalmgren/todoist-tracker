@@ -49,6 +49,6 @@ def get_future(todoist_api, n_days):
     today = arrow.utcnow().to('local').date()
     future = today + datetime.timedelta(days=n_days)
     for item, due_date in iter_task_duedates(todoist_api):
-        if today <= due_date <= future:
+        if due_date <= future:
             future_items.append(item)
     return future_items

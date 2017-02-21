@@ -77,8 +77,9 @@ class Command(TimeBaseCommand):
         # count the number of tasks that are due on each day
         daily_tasks = collections.Counter()
         future_tasks = tasks.get_future(self.todoist_api, n_days)
+        today = datetime.date.today()
         for task in future_tasks:
-            duedate = tasks.get_duedate(task)
+            duedate = max([tasks.get_duedate(task), today])
             daily_tasks[duedate] += self.get_hours_estimate(task)
 
         print "{:12s} {:>8s} {:>8s} {:>8s}".format(
