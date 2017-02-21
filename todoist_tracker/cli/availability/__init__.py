@@ -90,7 +90,7 @@ class Command(TimeBaseCommand):
         )
         for date in iterdates(datetime.date.today(), n_days):
             print "{:12s} {:8.2f} {:8.2f} {:8.2f}".format(
-                str(date),
+                date.strftime('%a, %b %d'),
                 daily_events[date],
                 daily_tasks[date],
                 daily_events[date] + daily_tasks[date],
