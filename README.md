@@ -84,7 +84,7 @@ being sent warnings every time the script is run.
 
    # setup paths on virtualenv deactivation
    echo 'unset PYTHONPATH' > ~/.virtualenvs/todoist-tracker/bin/predeactivate
-   echo 'export PATH=$__PATH_TODOIST_TRACKER' > ~/.virtualenvs/todoist-tracker/bin/predeactivate
+   echo 'export PATH=$__PATH_TODOIST_TRACKER' >> ~/.virtualenvs/todoist-tracker/bin/predeactivate
    ```
 
 1. follow the quick start instructions above to get your todoist credentials.
